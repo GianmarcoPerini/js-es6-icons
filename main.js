@@ -96,14 +96,14 @@ const icon = [
 		family: 'fas'
 	}
 ];
+const dropDown = document.querySelector('#drop-down')
+const box = document.querySelector('#box');
 
 const filterMenu = () => {
-    const dropDown = document.querySelector('#drop-down')
     const typeList = []
     icon.forEach(element => {
         if(typeList.indexOf(element.type) == -1) typeList.push(element.type)
     })
-
     typeList.forEach(element => {
         dropDown.innerHTML += `<option value="${element}">${element}</option>`
     })
@@ -111,15 +111,19 @@ const filterMenu = () => {
 
 
 const displayElement = () => {
-    const box = document.querySelector('#box');
-	
-	icon.forEach(element => {
-		const writeHTML = 
-		`<div class="obj-card">
-			<i class="${element.family} ${element.prefix}${element.name}"></i>
-			<p>${element.name.charAt(0).toUpperCase() + element.name.slice(1).split('-').join(' ')}</p>
-		</div>`
-		box.innerHTML += writeHTML
+		dropDown.addEventListener('change', (event)=>{
+			let writeHTML = filtered(event.target.value)
+			let temporaryHTML = ''
+			writeHTML.forEach(element => {
+			if(event.target.value == `${element.type}`){
+				temporaryHTML += 
+				`<div class="dai">
+					<i class="${element.family} ${element.prefix}${element.name}"></i>
+					<p>${element.name.toUpperCase().split('-').join(' ')}</p>
+				</div>`
+				box.innerHTML = temporaryHTML;
+			}
+		})
 	})
 }
 
@@ -127,7 +131,13 @@ const displayElement = () => {
 
 
 
+
+const filtered = (toFilter) => {
+	return icon.filter(el => el.type == toFilter)
+}
+
+
+
 filterMenu()
 
 displayElement()
-
