@@ -97,22 +97,37 @@ const icon = [
 	}
 ];
 
-const unicTypes = () => {
+const filterMenu = () => {
     const dropDown = document.querySelector('#drop-down')
     const typeList = []
-    icon.forEach(type => {
-        if(typeList.indexOf(type.type) == -1){
-            typeList.push(type.type)
-        } 
+    icon.forEach(element => {
+        if(typeList.indexOf(element.type) == -1) typeList.push(element.type)
     })
+
     typeList.forEach(element => {
         dropDown.innerHTML += `<option value="${element}">${element}</option>`
     })
-    
+}
+
+
+const displayElement = () => {
+    const box = document.querySelector('#box');
+	
+	icon.forEach(element => {
+		const writeHTML = 
+		`<div class="obj-card">
+			<i class="${element.family} ${element.prefix}${element.name}"></i>
+			<p>${element.name.charAt(0).toUpperCase() + element.name.slice(1).split('-').join(' ')}</p>
+		</div>`
+		box.innerHTML += writeHTML
+	})
 }
 
 
 
 
-unicTypes()
+
+filterMenu()
+
+displayElement()
 
