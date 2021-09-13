@@ -9,16 +9,30 @@
     <script src="https://kit.fontawesome.com/be67ecee4b.js" crossorigin="anonymous"></script>
     <link rel="stylesheet" href="style.css">
 </head>
-<body>
+<body class="vh-100 bg-secondary">
     
-    <div id="container">
-        <select name="types" id="drop-down" class="mb-5">
-            <option value="All">All</option>
-        </select>
-        <div id="box"></div>
+    <header class="bg-primary">
+
+                <div class="header">
+                    <p class="me-2 text-white fw-bold">FILTRA PER TIPO: </p>
+
+                    <select name="types" id="drop-down">
+                        <option value="All">All</option>
+                    </select>
+                </div>
+
+    </header>
 
 
-    </div>
+
+    <main class="bg-secondary">
+        <div class="container">
+            <div id="box" class="d-flex flex-wrap"></div>
+        </div>
+    </main>
+
+
+
 
 
     <script src="main.js"></script>

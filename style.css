@@ -1,0 +1,14 @@
+.card-obj{
+    margin: 20px;
+    width: calc(100% / 4 - 40px);
+    padding: 10px;
+    text-align: center;
+    box-shadow: 3px 3px 3px rgb(66, 66, 66);
+}
+
+.header{
+    display: flex;
+    justify-content: center;
+    align-items: baseline;
+    padding: 10px;
+}
