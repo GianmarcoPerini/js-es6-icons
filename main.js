@@ -57,7 +57,7 @@ const dropDownMenu = (placeToPrint) => {
 
 	// QUESTA FUNZIONE SERVE A STAMPARE LA PAGINA CON TUTTI I VALORI PRESENTI NELL'ARRAY (DEFAULT)
 
-const defaultHTML = (arr, placeToPrint) => {	
+const arrayPrinter = (arr, placeToPrint) => {	
 	let displayHTML = '';			
 	arr.forEach(element => {								// VIENE CREATO IL CICLO CHE ITERA GLI ELEMENTI DELL'ARRAY E LI STAMPA
 		displayHTML += classWriting(element)				// LA STAMPA AVVIENE AGGIUNGENDO I VARI ELEMENTE UNO DOPO L'ALTRO CON IL +=.......MA!!!
@@ -72,7 +72,7 @@ const printElements = (eventToListen) => {
 	eventToListen.addEventListener('change', (event)=>{		// UNA VOLTA CHE LA SCELTA CAMBIA (DROPDOWN MENÙ),
 		let targetValue = event.target.value;				// LA PAGINA VIENE SVUOTATA E POI DI NUOVO RIEMPITA CON I NUOVI ELEMENTI FILTRATI
 		let writeHTML = filtered(targetValue, icon);		// LA FUNZIONE FILTER VIENE COSÌ INSERITA IN UNA VARIABILE IN MODO DA POTER ESSERE RICHIAMATA E USATA
-		defaultHTML(writeHTML, box)																			
+		arrayPrinter(writeHTML, box)																			
 	})														
 }														
 
@@ -94,12 +94,11 @@ const classWriting = (el) => `<div class="card card-obj"><i class="${el.family} 
 const colorized = (arr, color) => {
 	const types = unicType(arr);							// TYPE UNICI
 
-	const colorizedArray = arr.map((element) => {		
+	const colorizedArray = arr.map((element) => {	
 		const indexOfType = types.indexOf(element.type);	// VARIABILE DOVE VIENE SALVATO L'INDEX DEI VARI TYPE
-		if(indexOfType !== -1){								// CONTROLLO QUAL'È L'INDEX DI TYPE(type = ['Animal', 'Vegetable', 'User'])
+		if(element.indexOfType != -1){						// CONTROLLO QUAL'È L'INDEX DI TYPE(type = ['Animal', 'Vegetable', 'User'])
 			element.color = color[indexOfType]; 			// SE L'INDICE VIENE TROVATO ALLORA SI CREA UNA NUOVA KEY DENTRO GLI OGGETTI.
 		}													// IL VALORE DI QUESTA KEY È = variabileCOLOR[indexOfType]; 
-		return element
 	})	
 	return colorizedArray
 }
@@ -110,7 +109,7 @@ const colors = colorsGenerator()		// GENERAZIONE COLORE
 
 colorized(icon, colors)					// GENERAZIONE KEY COLORE E ASSEGNAZIONE TRAMITE IN-LINE STYLE
 
-defaultHTML(icon, box);					// STAMPAGGIO LISTA OGGETTI COMPLETA SU PAGINA
+arrayPrinter(icon, box);				// STAMPAGGIO LISTA OGGETTI COMPLETA SU PAGINA
 
 dropDownMenu(dropDown)					// DROPDOWN MENÙ
 
