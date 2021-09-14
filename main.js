@@ -59,42 +59,40 @@ const dropDownMenu = (placeToPrint) => {
 
 const defaultHTML = (arr, placeToPrint) => {	
 	let displayHTML = '';			
-	arr.forEach(element => {
-		displayHTML += classWriting(element)
-		placeToPrint.innerHTML = displayHTML;
+	arr.forEach(element => {								// VIENE CREATO IL CICLO CHE ITERA GLI ELEMENTI DELL'ARRAY E LI STAMPA
+		displayHTML += classWriting(element)				// LA STAMPA AVVIENE AGGIUNGENDO I VARI ELEMENTE UNO DOPO L'ALTRO CON IL +=.......MA!!!
+		placeToPrint.innerHTML = displayHTML;				// QUESTO AVVIENE PERCHÈ NON VIENE USATO += -alias aggiungi- MA = CHE SOVRASCRIVE IL VECCHIO CON IL NUOVO
 	})
 }
 
 
 	// UNA VOLTA ESEGUITA LA SCELTA IL MENÙ STAMPA IN PAGINA GLI ELEMENTI FILTRATI RICHIESTI
 
-const printElements = (eventToListen, placeToPrint) => {
-	eventToListen.addEventListener('change', (event)=>{
-		let targetValue = event.target.value;
-		let writeHTML = filtered(targetValue, icon);	// LA FUNZIONE FILTER VIENE COSÌ INSERITA IN UNA VARIABILE IN MODO DA POTER ESSERE RICHIAMATA E USATA
-		let currentTarget = '';						
-		writeHTML.forEach(element => {					// VIENE CREATO IL CICLO CHE ITERA GLI ELEMENTI DELL'ARRAY E LI STAMPA
-		currentTarget += classWriting(element)			// LA STAMPA AVVIENE AGGIUNGENDO I VARI ELEMENTE UNO DOPO L'ALTRO CON IL +=.......MA!!!
-		})
-		placeToPrint.innerHTML = currentTarget;					// UNA VOLTA CHE LA SCELTA CAMBIA (DROPDOWN MENÙ),
-	})													// LA PAGINA VIENE SVUOTATA E POI DI NUOVO RIEMPITA CON I NUOVI ELEMENTI FILTRATI
-}														// QUESTO AVVIENE PERCHÈ NON VIENE USATO += -alias aggiungi- MA = CHE SOVRASCRIVE IL VECCHIO CON IL NUOVO
+const printElements = (eventToListen) => {
+	eventToListen.addEventListener('change', (event)=>{		// UNA VOLTA CHE LA SCELTA CAMBIA (DROPDOWN MENÙ),
+		let targetValue = event.target.value;				// LA PAGINA VIENE SVUOTATA E POI DI NUOVO RIEMPITA CON I NUOVI ELEMENTI FILTRATI
+		let writeHTML = filtered(targetValue, icon);		// LA FUNZIONE FILTER VIENE COSÌ INSERITA IN UNA VARIABILE IN MODO DA POTER ESSERE RICHIAMATA E USATA
+		defaultHTML(writeHTML, box)																			
+	})														
+}														
 
 
 	// FILTRO CHE PRENDE L'ELEMENTO CHE SI DESIDERA RICHIAMARE E RESTITUISCE L'ARREY CON TUTTI GLI OGGETTI CORRISPONDETI ALL'INTERNO
 
 const filtered = (toFilter, arr) => {
-	if(toFilter == 'All') return arr					// SE È -ALL- MI RESTITUISCI L'ARRAY INTERO ICON
-	return arr.filter(el => el.type == toFilter)		// ALTRIMENTI MI RESTITUISCI L'ARRAY CON IL -TYPE- == A toFilter(esempio: User oppure Animal)
+	if(toFilter == 'All') return arr						// SE È -ALL- MI RESTITUISCI L'ARRAY INTERO ICON
+	return arr.filter(el => el.type == toFilter)			// ALTRIMENTI MI RESTITUISCI L'ARRAY CON IL -TYPE- == A toFilter(esempio: User oppure Animal)
 }
 
 	// VARIABILE DI COMODO PER NON RISCRIVERE LA STESSA INFORMAZIONE PIÙ VOLTE
+
 const classWriting = (el) => `<div class="card card-obj"><i class="${el.family} ${el.prefix}${el.name} fs-2 mt-2" style="color:${el.color}"></i><p class="mt-3">${el.name.toUpperCase().split('-').join(' ')}</p></div>`
 
 
 	// CREAZIONE NUOVA KEY NEGLI OGGETTI E ASSEGNAZIONE DEL COLORE
+
 const colorized = (arr, color) => {
-	const types = unicType(arr);						// TYPE UNICI
+	const types = unicType(arr);							// TYPE UNICI
 
 	const colorizedArray = arr.map((element) => {		
 		const indexOfType = types.indexOf(element.type);	// VARIABILE DOVE VIENE SALVATO L'INDEX DEI VARI TYPE
