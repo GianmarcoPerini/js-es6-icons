@@ -17,29 +17,6 @@ const icon = [
 	{name: 'user-secret', prefix: 'fa-', type: 'User', family: 'fas'}
 ];
 
-	// RICERCA DEL TYPE NELL'ARRAY DI OGGETTI E CREAZIONE DELL'ARRAY NELLA QUALE VERRÀ IMMAGAZZINATA L'INFORMAZIONE
-
-const unicType = (arr)=>{
-	const typeList = []
-	arr.forEach(element => {
-		if(typeList.indexOf(element.type) == -1) typeList.push(element.type)
-	})
-	return typeList
-}
-
-	// GENERATORE DI COLORI RANDOMICI CHE RITORNA UN ARRAI DI CODICI HEX
-
-const colorsGenerator = () => {
-	const typeList = unicType(icon)
-	const colorsArr = []
-	typeList.forEach(()=>{
-		colorsArr.push('#' + Math.floor(Math.random()*16777215).toString(16))
-	})
-	return colorsArr
-}
-
-
-
 const dropDown = document.querySelector('#drop-down')
 const box = document.querySelector('#box');
 
@@ -65,6 +42,18 @@ const arrayPrinter = (arr, placeToPrint) => {
 	})
 }
 
+	// RICERCA DEL TYPE NELL'ARRAY DI OGGETTI E CREAZIONE DELL'ARRAY NELLA QUALE VERRÀ IMMAGAZZINATA L'INFORMAZIONE
+
+const unicType = (arr)=>{
+	return arr.map(element => (arr.indexOf(element.type) == -1) ? element.type : undefined)
+}
+
+	// GENERATORE DI COLORI RANDOMICI CHE RITORNA UN ARRAI DI CODICI HEX
+
+const getRandomColors = () => {
+	const typeList = unicType(icon)
+	return typeList.map(() => '#' + Math.floor(Math.random()*16777215).toString(16))
+}
 
 	// UNA VOLTA ESEGUITA LA SCELTA IL MENÙ STAMPA IN PAGINA GLI ELEMENTI FILTRATI RICHIESTI
 
@@ -91,13 +80,13 @@ const classWriting = (el) => `<div class="card card-obj"><i class="${el.family} 
 
 	// CREAZIONE NUOVA KEY NEGLI OGGETTI E ASSEGNAZIONE DEL COLORE
 
-const colorized = (arr, color) => {
+const colorized = (arr, arrayColors) => {
 	const types = unicType(arr);							// TYPE UNICI
 
 	const colorizedArray = arr.map((element) => {	
 		const indexOfType = types.indexOf(element.type);	// VARIABILE DOVE VIENE SALVATO L'INDEX DEI VARI TYPE
 		if(element.indexOfType != -1){						// CONTROLLO QUAL'È L'INDEX DI TYPE(type = ['Animal', 'Vegetable', 'User'])
-			element.color = color[indexOfType]; 			// SE L'INDICE VIENE TROVATO ALLORA SI CREA UNA NUOVA KEY DENTRO GLI OGGETTI.
+			element.color = arrayColors[indexOfType]; 		// SE L'INDICE VIENE TROVATO ALLORA SI CREA UNA NUOVA KEY DENTRO GLI OGGETTI.
 		}													// IL VALORE DI QUESTA KEY È = variabileCOLOR[indexOfType]; 
 	})	
 	return colorizedArray
@@ -105,7 +94,7 @@ const colorized = (arr, color) => {
 
 
 
-const colors = colorsGenerator()		// GENERAZIONE COLORE
+const colors = getRandomColors()		// GENERAZIONE COLORE
 
 colorized(icon, colors)					// GENERAZIONE KEY COLORE E ASSEGNAZIONE TRAMITE IN-LINE STYLE
 
