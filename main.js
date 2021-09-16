@@ -45,7 +45,11 @@ const arrayPrinter = (arr, placeToPrint) => {
 	// RICERCA DEL TYPE NELL'ARRAY DI OGGETTI E CREAZIONE DELL'ARRAY NELLA QUALE VERRÀ IMMAGAZZINATA L'INFORMAZIONE
 
 const unicType = (arr)=>{
-	return arr.map(element => (arr.indexOf(element.type) == -1) ? element.type : undefined)
+	const typeList = []
+	arr.forEach(element => {
+		if(typeList.indexOf(element.type) == -1) typeList.push(element.type)
+	})
+	return typeList
 }
 
 	// GENERATORE DI COLORI RANDOMICI CHE RITORNA UN ARRAI DI CODICI HEX
